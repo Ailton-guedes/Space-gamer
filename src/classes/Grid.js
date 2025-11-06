@@ -22,7 +22,7 @@ class Grid{
             for(let col = 0; col < this.cols; col += 1){
                 const invader = new Invader({
                     x: col * 50 + 20,
-                    y: row * 35 + 20,
+                    y: row * 35 + 100,
 
                 },
 
@@ -41,7 +41,7 @@ class Grid{
         this.invader.forEach((invader) => invader.draw(ctx));
     }
 
-    update() {
+    update(playerStatus) {
         if (this.chegouNaBordaDireita()){
             this.direction = "left";
             this.moveDown = true;
@@ -49,6 +49,8 @@ class Grid{
             this.direction = "right";
             this.moveDown = true;
         }
+
+        if (!playerStatus) this.moveDown = false; 
 
         this.invader.forEach((invader) => {
 
@@ -83,6 +85,11 @@ class Grid{
     getRondomInvader(){
         const index = Math.floor(Math.random() * this.invader.length);
         return this.invader[index];
+    }
+
+    restart() {
+        this.invader = this.init();
+        this.direction = "right";
     }
 }
 
